@@ -14,6 +14,7 @@ export class ItemServiceService {
 
   itemsCollection : AngularFirestoreCollection<Item>;
   items : Observable<Item[]>;
+  itemDoc : AngularFirestoreDocument<Item>;
 
   constructor(private afs : AngularFirestore) { 
     //to insert
@@ -35,6 +36,11 @@ export class ItemServiceService {
 
   addItem(item : Item){
     this.itemsCollection.add(item);
+  }
+
+  deleteItem(item : Item){
+    this.itemDoc = this.afs.doc(`items/${item.id}`);
+    this.itemDoc.delete();
   }
 
   getItems() {
