@@ -8,9 +8,11 @@ import { Item } from 'src/app/models/Item';
   styleUrls: ['./items.component.css']
 })
 export class ItemsComponent implements OnInit {
-
-
+  
   items : Item[];
+  editState : boolean = false;
+  itemToEdit : Item;
+
   constructor(private itemService : ItemServiceService) { }
 
   ngOnInit(){
@@ -20,7 +22,24 @@ export class ItemsComponent implements OnInit {
     });
   }
 
+  editItem(event, item : Item){
+    this.editState = true;
+    this.itemToEdit = item;
+  }
+
   deleteItem(event,item : Item){
+    //call this.clearState to remove the item from context
+    this.clearState();
     this.itemService.deleteItem(item);
+  }
+
+  updateItem(item : Item){
+    this.itemService.updateitem(item);
+    this.clearState();
+  }
+
+  clearState(){
+    this.editState = false;
+    this.itemToEdit = null;
   }
 }

@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ItemServiceService {
-
+  
   itemsCollection : AngularFirestoreCollection<Item>;
   items : Observable<Item[]>;
   itemDoc : AngularFirestoreDocument<Item>;
@@ -41,6 +41,11 @@ export class ItemServiceService {
   deleteItem(item : Item){
     this.itemDoc = this.afs.doc(`items/${item.id}`);
     this.itemDoc.delete();
+  }
+
+  updateitem(item: Item) {
+    this.itemDoc = this.afs.doc(`items/${item.id}`);
+    this.itemDoc.update(item);
   }
 
   getItems() {
